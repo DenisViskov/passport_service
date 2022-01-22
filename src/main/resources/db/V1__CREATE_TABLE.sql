@@ -19,7 +19,7 @@ create table passport
     constraint PASSPORT_ID_PK primary key (id),
     constraint PASSPORT_NUMBER_UNIQUE unique (number),
     constraint PASSPORT_CHECK_BIRTH_DATE check (birth_date > TO_DATE('01.01.1920', 'dd.mm.yyyy'))
-)
+);
 
 
 -- Create indexes on id, serial
