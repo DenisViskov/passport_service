@@ -15,7 +15,7 @@ public interface PassportRepository extends JpaRepository<Passport, Long> {
     List<Passport> findPassportsWithExpiredDate();
 
     @Query(
-        value = "select * from Passport p where current_date between (p.expiredDate - interval '3 month') and p.expiredDate",
+        value = "select * from Passport p where current_date between (p.expired_date - interval '3 month') and p.expired_date",
         nativeQuery = true
     )
     List<Passport> findReplaceablePassports();
