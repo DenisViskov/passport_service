@@ -5,12 +5,14 @@ import com.example.passport_service.dto.serializers.DateSerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.*;
 import java.util.Date;
 
 @Data
+@Builder
 public class PassportDto {
 
     @JsonProperty(value = "id")
