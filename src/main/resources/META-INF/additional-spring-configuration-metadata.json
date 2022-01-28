@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "spring.restAPI.root",
+      "type": "java.lang.String",
+      "description": "Description for spring.restAPI.root."
+    },
+    {
+      "name": "spring.restAPI.save",
+      "type": "java.lang.String",
+      "description": "Description for spring.restAPI.save."
+    }
+  ]
+}

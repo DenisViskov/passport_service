@@ -14,3 +14,7 @@ spring:
   flyway:
       enabled: true
       validate-on-migrate: true
+
+  restAPI:
+      root: /passports
+      save: ${spring.restAPI.root}/save

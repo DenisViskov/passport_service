@@ -3,24 +3,18 @@ package com.example.passport_service.rest;
 import com.example.passport_service.StubBuilder;
 import com.example.passport_service.domain.Passport;
 import com.example.passport_service.dto.PassportDto;
+import com.example.passport_service.environment.RestApiPathHolder;
 import com.example.passport_service.service.PassportMapperService;
 import com.example.passport_service.service.PassportService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -33,6 +27,9 @@ class PassportRestApiTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private RestApiPathHolder pathHolder;
 
     @MockBean
     private PassportService<Passport> passportService;
@@ -50,7 +47,7 @@ class PassportRestApiTest {
         when(passportService.save(any())).thenReturn(expectedId);
 
         mockMvc.perform(
-                post("/passports/save")
+                post(pathHolder.getSave())
                     .content(content)
                     .contentType(MediaType.APPLICATION_JSON)
             )
@@ -58,7 +55,12 @@ class PassportRestApiTest {
                 content()
                     .contentType(MediaType.APPLICATION_JSON)
             )
-            .andExpect(status().isOk())
-            .andExpect(content().string("1"));
+            .andExpect(
+                status()
+                    .isOk())
+            .andExpect(
+                content()
+                    .string("1")
+            );
     }
 }
