@@ -22,6 +22,5 @@ create table passport
 );
 
 
--- Create indexes on id, serial
-create unique index PASSPORT_ID_UNIQUE_INDEX on passport (id);
+-- Create index on serial
 create index PASSPORT_SERIAL_INDEX on passport (serial);

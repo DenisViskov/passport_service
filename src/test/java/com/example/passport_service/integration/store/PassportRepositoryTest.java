@@ -1,16 +1,15 @@
 package com.example.passport_service.integration.store;
 
+import com.example.passport_service.StubBuilder;
 import com.example.passport_service.domain.Passport;
 import com.example.passport_service.store.PassportRepository;
 import org.assertj.core.api.WithAssertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -22,20 +21,6 @@ class PassportRepositoryTest implements WithAssertions {
 
     @Autowired
     private PassportRepository repository;
-
-    private static final Passport STUB = new Passport();
-
-    @BeforeAll
-    static void beforeAll() {
-        STUB.setSerial(4561L);
-        STUB.setNumber(123456L);
-        STUB.setName("Andrew");
-        STUB.setSurname("Alf");
-        STUB.setBirthDate(toDate(LocalDate.of(1990, 03, 05)));
-        STUB.setIssuingAuthority("Test");
-        STUB.setDateOfIssue(toDate(LocalDate.of(2010, 03, 05)));
-        STUB.setExpiredDate(toDate(LocalDate.of(2022, 03, 05)));
-    }
 
     @Test
     void findPassportsBySerial() {
@@ -77,19 +62,19 @@ class PassportRepositoryTest implements WithAssertions {
 
     @Test
     void createPassport() {
-        final Passport saved = repository.save(STUB);
-        STUB.setId(saved.getId());
+        final Passport passport = StubBuilder.builder().build();
+        final Passport saved = repository.save(passport);
+        passport.setId(saved.getId());
 
         assertThat(saved).isNotNull()
-            .isEqualTo(STUB);
+            .isEqualTo(passport);
 
         repository.delete(saved);
-        STUB.setId(null);
     }
 
     @Test
     void updatePassport() {
-        final Passport saved = repository.save(STUB);
+        final Passport saved = repository.save(StubBuilder.builder().build());
         final String expectedSurname = "updatedSurname";
         saved.setSurname(expectedSurname);
 
@@ -103,7 +88,7 @@ class PassportRepositoryTest implements WithAssertions {
 
     @Test
     void deletePassport() {
-        final Passport saved = repository.save(STUB);
+        final Passport saved = repository.save(StubBuilder.builder().build());
         repository.delete(saved);
 
         final Passport expected = repository.findById(saved.getId())
@@ -114,24 +99,17 @@ class PassportRepositoryTest implements WithAssertions {
 
     @Test
     void passportCheckBirthDateConstraints() {
-        final Date stubBirthDate = STUB.getBirthDate();
-        STUB.setBirthDate(toDate(LocalDate.of(1915, 02, 15)));
+        final Passport passport = StubBuilder.builder()
+            .birthDate(LocalDate.of(1915, 02, 15))
+            .build();
 
         final String expectedMessage = "could not execute statement; SQL [n/a];";
         final DataIntegrityViolationException dataIntegrityViolationException = assertThrows(
             DataIntegrityViolationException.class,
-            () -> repository.save(STUB)
+            () -> repository.save(passport)
         );
 
         assertThat(dataIntegrityViolationException).isNotNull()
             .hasMessageContaining(expectedMessage);
-
-        STUB.setBirthDate(stubBirthDate);
-    }
-
-    private static Date toDate(final LocalDate localDate) {
-        return Date.from(localDate.atStartOfDay()
-            .atZone(ZoneId.systemDefault())
-            .toInstant());
     }
 }
