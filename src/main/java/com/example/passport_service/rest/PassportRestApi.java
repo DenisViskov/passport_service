@@ -6,10 +6,7 @@ import com.example.passport_service.service.PassportMapperService;
 import com.example.passport_service.service.PassportService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -27,5 +24,16 @@ public class PassportRestApi {
         final Passport passport = mapperService.toEntity(passportDto);
         final Long id = passportService.save(passport);
         return ResponseEntity.ok(id);
+    }
+
+    @PutMapping(value = "/update")
+    public ResponseEntity<Boolean> update(
+        @RequestParam final Long id,
+        @Valid @RequestBody final PassportDto passportDto
+    ) {
+        final Passport passport = mapperService.toEntity(passportDto);
+        passport.setId(id);
+        final boolean result = passportService.update(passport);
+        return result ? ResponseEntity.ok(true) : ResponseEntity.badRequest().body(false);
     }
 }
