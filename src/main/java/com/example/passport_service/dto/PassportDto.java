@@ -1,14 +1,14 @@
 package com.example.passport_service.dto;
 
-import com.example.passport_service.dto.serializers.DateDeserializer;
-import com.example.passport_service.dto.serializers.DateSerializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 
 @Data
@@ -35,8 +35,7 @@ public class PassportDto {
     private String surname;
 
     @Past(message = "birth date must be in past")
-    @JsonSerialize(using = DateSerializer.class)
-    @JsonDeserialize(using = DateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     @JsonProperty(value = "birth_date", required = true)
     private Date birthDate;
 
@@ -45,13 +44,11 @@ public class PassportDto {
     private String issuingAuthority;
 
     @PastOrPresent(message = "date_of_issue must be past or present")
-    @JsonSerialize(using = DateSerializer.class)
-    @JsonDeserialize(using = DateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     @JsonProperty(value = "date_of_issue", required = true)
     private Date dateOfIssue;
 
-    @JsonSerialize(using = DateSerializer.class)
-    @JsonDeserialize(using = DateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     @JsonProperty(value = "expired_date", required = true)
     private Date expiredDate;
 }
