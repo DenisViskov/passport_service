@@ -1,16 +1,16 @@
 spring:
 
   jpa:
-    hibernate:
-      ddl-auto: validate
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
+      hibernate:
+        ddl-auto: validate
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      show-sql: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/passport
-    username: "postgres"
-    password: "021292"
+      url: jdbc:postgresql://localhost:5432/passport
+      username: "postgres"
+      password: "021292"
 
   flyway:
-    enabled: true
-    validate-on-migrate: true
+      enabled: true
+      validate-on-migrate: true
