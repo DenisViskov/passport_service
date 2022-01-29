@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -35,5 +37,51 @@ public class PassportRestApi {
         passport.setId(id);
         final boolean result = passportService.update(passport);
         return result ? ResponseEntity.ok(true) : ResponseEntity.badRequest().body(false);
+    }
+
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<Boolean> delete(@RequestParam final Long id) {
+        final boolean result = passportService.delete(id);
+        return result ? ResponseEntity.ok(true) : ResponseEntity.badRequest().body(false);
+    }
+
+    @GetMapping(value = "/find")
+    public ResponseEntity<List<PassportDto>> find() {
+        return ResponseEntity.ok(
+            passportService.findAll()
+                .stream()
+                .map(mapperService::toDto)
+                .collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping(value = "/find", params = "serial")
+    public ResponseEntity<List<PassportDto>> findBySerial(@RequestParam final Long serial) {
+        return ResponseEntity.ok(
+            passportService.findBySerial(serial)
+                .stream()
+                .map(mapperService::toDto)
+                .collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping(value = "/unavailable")
+    public ResponseEntity<List<PassportDto>> unavailable() {
+        return ResponseEntity.ok(
+            passportService.findUnavailable()
+                .stream()
+                .map(mapperService::toDto)
+                .collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping(value = "/find-replaceable")
+    public ResponseEntity<List<PassportDto>> findReplaceable() {
+        return ResponseEntity.ok(
+            passportService.findReplaceable()
+                .stream()
+                .map(mapperService::toDto)
+                .collect(Collectors.toList())
+        );
     }
 }

@@ -18,3 +18,9 @@ spring:
   restAPI:
       root: /passports
       save: ${spring.restAPI.root}/save
+      update: ${spring.restAPI.root}/update
+      delete: ${spring.restAPI.root}/delete
+      find: ${spring.restAPI.root}/find
+      findBySerial: ${spring.restAPI.find}
+      unavailable: ${spring.restAPI.root}/unavailable
+      findReplaceable: ${spring.restAPI.root}/find-replaceable

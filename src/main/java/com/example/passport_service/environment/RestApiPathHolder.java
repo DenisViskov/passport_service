@@ -10,9 +10,24 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties
 public class RestApiPathHolder {
 
-    @Value("${spring.restAPI.root}")
-    private String root;
-
     @Value("${spring.restAPI.save}")
     private String save;
+
+    @Value("${spring.restAPI.update}")
+    private String update;
+
+    @Value("${spring.restAPI.delete}")
+    private String delete;
+
+    @Value("${spring.restAPI.find}")
+    private String find;
+
+    @Value("${spring.restAPI.findBySerial}")
+    private String findBySerial;
+
+    @Value("${spring.restAPI.unavailable}")
+    private String unavailable;
+
+    @Value("${spring.restAPI.findReplaceable}")
+    private String findReplaceable;
 }
