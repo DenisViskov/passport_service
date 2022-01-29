@@ -47,41 +47,28 @@ public class PassportRestApi {
 
     @GetMapping(value = "/find")
     public ResponseEntity<List<PassportDto>> find() {
-        return ResponseEntity.ok(
-            passportService.findAll()
-                .stream()
-                .map(mapperService::toDto)
-                .collect(Collectors.toList())
-        );
+        return ResponseEntity.ok(toListDto(passportService.findAll()));
     }
 
     @GetMapping(value = "/find", params = "serial")
     public ResponseEntity<List<PassportDto>> findBySerial(@RequestParam final Long serial) {
-        return ResponseEntity.ok(
-            passportService.findBySerial(serial)
-                .stream()
-                .map(mapperService::toDto)
-                .collect(Collectors.toList())
-        );
+        return ResponseEntity.ok(toListDto(passportService.findBySerial(serial)));
     }
 
     @GetMapping(value = "/unavailable")
     public ResponseEntity<List<PassportDto>> unavailable() {
-        return ResponseEntity.ok(
-            passportService.findUnavailable()
-                .stream()
-                .map(mapperService::toDto)
-                .collect(Collectors.toList())
-        );
+        return ResponseEntity.ok(toListDto(passportService.findUnavailable()));
     }
 
     @GetMapping(value = "/find-replaceable")
     public ResponseEntity<List<PassportDto>> findReplaceable() {
-        return ResponseEntity.ok(
-            passportService.findReplaceable()
-                .stream()
-                .map(mapperService::toDto)
-                .collect(Collectors.toList())
-        );
+        return ResponseEntity.ok(toListDto(passportService.findReplaceable()));
+    }
+
+    private List<PassportDto> toListDto(final List<Passport> passports) {
+        return passports
+            .stream()
+            .map(mapperService::toDto)
+            .collect(Collectors.toList());
     }
 }
