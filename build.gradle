@@ -18,18 +18,24 @@ repositories {
     mavenCentral()
 }
 
+def assertj = '3.22.0'
+def mapstruct = '1.4.2.Final'
+def mapstruct_binding = '0.2.0'
+def validation_api = '2.0.1.Final'
+def hibernate_validator = '7.0.0.Final'
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.flywaydb:flyway-core'
-    implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
-    implementation group: 'org.hibernate', name: 'hibernate-validator', version: '7.0.0.Final'
-    implementation 'org.mapstruct:mapstruct:1.4.2.Final', 'org.projectlombok:lombok'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final', 'org.projectlombok:lombok', 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    implementation group: 'javax.validation', name: 'validation-api', version: validation_api
+    implementation group: 'org.hibernate', name: 'hibernate-validator', version: hibernate_validator
+    implementation "org.mapstruct:mapstruct:${mapstruct}", 'org.projectlombok:lombok'
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct}", 'org.projectlombok:lombok', "org.projectlombok:lombok-mapstruct-binding:${mapstruct_binding}"
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.assertj:assertj-core:3.19.0'
+    testImplementation "org.assertj:assertj-core:${assertj}"
 }
 
 test {
