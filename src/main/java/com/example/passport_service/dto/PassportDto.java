@@ -18,11 +18,11 @@ public class PassportDto {
     @JsonProperty(value = "id")
     private Long id;
 
-    @Digits(integer = 4, fraction = 0, message = "only 4 digits allowed")
+    @Digits(integer = 4, fraction = 0, message = "maximum 4 digits allowed")
     @JsonProperty(value = "serial_number", required = true)
     private Long serial;
 
-    @Digits(integer = 6, fraction = 0, message = "only 6 digits allowed")
+    @Digits(integer = 6, fraction = 0, message = "maximum 6 digits allowed")
     @JsonProperty(value = "main_number", required = true)
     private Long number;
 
