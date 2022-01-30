@@ -17,7 +17,6 @@ public class PassportServiceImpl implements PassportService<Passport> {
 
     @Override public Long save(final Passport passport) {
         log.info("call save {}", passport);
-
         final Passport result = repository.save(passport);
 
         return result.getId();
@@ -25,7 +24,6 @@ public class PassportServiceImpl implements PassportService<Passport> {
 
     @Override public boolean update(final Passport passport) {
         log.info("call update {}", passport);
-
         if (!existsById(passport.getId())) {
             return false;
         }
@@ -36,7 +34,6 @@ public class PassportServiceImpl implements PassportService<Passport> {
 
     @Override public boolean delete(final Long id) {
         log.info("call delete by id: {}", id);
-
         if (!existsById(id)) {
             return false;
         }
@@ -47,25 +44,21 @@ public class PassportServiceImpl implements PassportService<Passport> {
 
     @Override public List<Passport> findAll() {
         log.info("call findAll");
-
         return repository.findAll();
     }
 
     @Override public List<Passport> findBySerial(final Long serial) {
         log.info("call find by serial: {}", serial);
-
         return repository.findPassportsBySerial(serial);
     }
 
     @Override public List<Passport> findUnavailable() {
         log.info("call find unavailable");
-
         return repository.findPassportsWithExpiredDate();
     }
 
     @Override public List<Passport> findReplaceable() {
         log.info("call find replaceable");
-
         return repository.findReplaceablePassports();
     }
 
