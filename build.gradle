@@ -27,7 +27,6 @@ def hibernate_validator = '7.0.0.Final'
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.flywaydb:flyway-core'
     implementation group: 'javax.validation', name: 'validation-api', version: validation_api
     implementation group: 'org.hibernate', name: 'hibernate-validator', version: hibernate_validator
     implementation "org.mapstruct:mapstruct:${mapstruct}", 'org.projectlombok:lombok'
