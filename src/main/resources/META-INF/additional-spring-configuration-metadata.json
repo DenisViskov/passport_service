@@ -39,6 +39,21 @@
       "name": "spring.restAPI.findReplaceable",
       "type": "java.lang.String",
       "description": "Description for spring.restAPI.findReplaceable."
+    },
+    {
+      "name": "spring.kafka.host",
+      "type": "java.lang.String",
+      "description": "Description for spring.kafka.host."
+    },
+    {
+      "name": "spring.kafka.port",
+      "type": "java.lang.String",
+      "description": "Description for spring.kafka.port."
+    },
+    {
+      "name": "spring.kafka.topic",
+      "type": "java.lang.String",
+      "description": "Description for spring.kafka.topic."
     }
   ]
 }
