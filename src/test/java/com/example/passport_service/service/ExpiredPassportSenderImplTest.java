@@ -5,6 +5,7 @@ import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,11 +35,16 @@ class ExpiredPassportSenderImplTest implements WithAssertions {
     @Autowired
     private KafkaSender<ExpiredPassportDto> sender;
 
+    private Consumer<Long, ExpiredPassportDto> consumer;
+
     @Autowired
     private EmbeddedKafkaBroker broker;
 
     @Value("${spring.kafka.topic}")
     private String topic;
+
+    @Value("${spring.kafka.consumer.group-id}")
+    private String groupId;
 
     private final ExpiredPassportDto stub = ExpiredPassportDto.builder()
         .id(1L)
@@ -46,28 +52,26 @@ class ExpiredPassportSenderImplTest implements WithAssertions {
         .number(123456L)
         .build();
 
+    @BeforeEach
+    void consumer() {
+        Map<String, Object> props = KafkaTestUtils.consumerProps(groupId, "true", broker);
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+
+        final var consumer = new DefaultKafkaConsumerFactory<Long, ExpiredPassportDto>(props)
+                .createConsumer();
+        consumer.subscribe(Collections.singletonList(topic));
+        this.consumer = consumer;
+    }
+
     @Test
     void sendMessage() {
-        final var consumer = getConsumer(broker);
-
         final var listenableFuture = sender.sendMessage(topic, stub);
         final var record = KafkaTestUtils.getSingleRecord(consumer, topic);
 
         assertThat(listenableFuture.isDone()).isTrue();
         assertThat(record.topic()).isEqualTo(topic);
         assertThat(record.value()).isNotNull().isEqualTo(stub);
-    }
-
-    private Consumer<Long, ExpiredPassportDto> getConsumer(final EmbeddedKafkaBroker broker) {
-        Map<String, Object> props = KafkaTestUtils.consumerProps("app.1", "true", broker);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
-
-        final var consumer = new DefaultKafkaConsumerFactory<Long, ExpiredPassportDto>(props)
-            .createConsumer();
-        consumer.subscribe(Collections.singletonList(topic));
-        return consumer;
     }
 }
