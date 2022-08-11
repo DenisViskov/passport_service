@@ -1,6 +1,7 @@
 package com.example.passport_service.rest;
 
 import com.example.passport_service.StubBuilder;
+import com.example.passport_service.config.DisabledDaoConfig;
 import com.example.passport_service.domain.Passport;
 import com.example.passport_service.dto.PassportDto;
 import com.example.passport_service.environment.RestApiPathHolder;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -29,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Import(DisabledDaoConfig.class)
 class PassportRestApiTest {
 
     @Autowired

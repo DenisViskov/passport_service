@@ -1,5 +1,6 @@
 package com.example.passport_service.service;
 
+import com.example.passport_service.config.DisabledDaoConfig;
 import com.example.passport_service.dto.ExpiredPassportDto;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
@@ -29,6 +31,7 @@ import java.util.Map;
     }
 )
 @SpringBootTest
+@Import(DisabledDaoConfig.class)
 @TestPropertySource(locations = "classpath:application.yml")
 class ExpiredPassportSenderImplTest implements WithAssertions {
 
