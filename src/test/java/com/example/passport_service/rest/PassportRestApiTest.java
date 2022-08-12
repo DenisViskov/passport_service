@@ -4,7 +4,7 @@ import com.example.passport_service.StubBuilder;
 import com.example.passport_service.config.DisabledDaoConfig;
 import com.example.passport_service.domain.Passport;
 import com.example.passport_service.dto.PassportDto;
-import com.example.passport_service.environment.RestApiPathHolder;
+import com.example.passport_service.config.RestApiConfigurationProperties;
 import com.example.passport_service.service.PassportMapperService;
 import com.example.passport_service.service.PassportService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,7 +38,7 @@ class PassportRestApiTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private RestApiPathHolder pathHolder;
+    private RestApiConfigurationProperties pathHolder;
 
     @MockBean
     private PassportService<Passport> passportService;
