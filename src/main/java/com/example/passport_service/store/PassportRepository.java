@@ -1,6 +1,7 @@
 package com.example.passport_service.store;
 
 import com.example.passport_service.domain.Passport;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import java.util.List;
 public interface PassportRepository extends JpaRepository<Passport, Long> {
     List<Passport> findPassportsBySerial(final Long serial);
 
+    @Cacheable(value = "expired_passports_cache", cacheManager = "customCacheManager")
     @Query("select p from Passport p where p.expiredDate < current_date")
     List<Passport> findPassportsWithExpiredDate();
 
