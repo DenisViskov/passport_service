@@ -32,3 +32,4 @@ spring:
         auto-offset-reset: earliest
       bootstrap-servers: ${spring.kafka.host}:${spring.kafka.port}
       topic: notify
+      typeMapping: dto:com.example.passport_service.dto.ExpiredPassportDto

@@ -1,9 +1,10 @@
 package com.example.passport_service.config;
 
 import com.example.passport_service.dto.ExpiredPassportDto;
+import lombok.AllArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.LongSerializer;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -16,10 +17,11 @@ import java.util.Map;
 
 @EnableKafka
 @Configuration
+@AllArgsConstructor
 public class KafkaProducerConfig {
 
-    @Value("${spring.kafka.bootstrap-servers}")
-    private String kafkaServer;
+    @Autowired
+    private final KafkaConfigurationProperties kafkaConfigurationProperties;
 
     @Bean
     public KafkaTemplate<Long, ExpiredPassportDto> kafkaTemplate() {
@@ -33,9 +35,10 @@ public class KafkaProducerConfig {
 
     private Map<String, Object> producerConfigs() {
         return Map.of(
-            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServer,
+            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfigurationProperties.getBootstrapServers(),
             ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, LongSerializer.class,
-            ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class
+            ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class,
+            JsonSerializer.TYPE_MAPPINGS, kafkaConfigurationProperties.getTypeMapping()
         );
     }
 }
