@@ -11,8 +11,8 @@ spring:
 
   datasource:
       url: jdbc:postgresql://localhost:5432/passport
-      username: "postgres"
-      password: "021292"
+      username: postgres
+      password: postgres
 
   flyway:
       enabled: true
