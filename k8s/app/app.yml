@@ -45,7 +45,7 @@ spec:
                   key: password
           readinessProbe:
             httpGet:
-              path: /actuator/health  # Замени, если Actuator не включен
+              path: /actuator/health
               port: 9090
             initialDelaySeconds: 10
             periodSeconds: 5
