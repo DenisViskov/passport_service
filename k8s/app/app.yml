@@ -76,12 +76,19 @@ kind: Ingress
 metadata:
   name: passport-app-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
     - http:
         paths:
-          - path: /
+          - path: /passports
+            pathType: Prefix
+            backend:
+              service:
+                name: passport-app
+                port:
+                  number: 80
+          - path: /actuator
             pathType: Prefix
             backend:
               service:
