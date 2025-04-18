@@ -20,3 +20,10 @@ app:
     port: 5432
     name: passport
     username: postgres
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/use-regex: "true"
+    service:
+      name: passport-app
+      port: 80
