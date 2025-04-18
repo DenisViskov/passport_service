@@ -6,6 +6,6 @@ spec:
   selector:
     app: passport-app
   ports:
-    - port: 80
-      targetPort: 9090
-  type: ClusterIP
+    - port: {{ .Values.app.service.port }}
+      targetPort: {{ .Values.app.service.targetPort }}
+  type: {{ .Values.app.service.type }}

@@ -11,3 +11,7 @@ app:
     requests:
       cpu: "200m"
       memory: "512Mi"
+  service:
+    port: 80
+    targetPort: 9090
+    type: ClusterIP
