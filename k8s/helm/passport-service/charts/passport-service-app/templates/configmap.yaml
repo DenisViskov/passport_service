@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: passport-app-config
 data:
-  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/passport"
-  SPRING_DATASOURCE_USERNAME: "postgres"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://{{ .Values.app.db.host }}:{{ .Values.app.db.port }}/{{ .Values.app.db.name }}"
+  SPRING_DATASOURCE_USERNAME: "{{ .Values.app.db.username }}"

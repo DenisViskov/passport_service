@@ -15,3 +15,8 @@ app:
     port: 80
     targetPort: 9090
     type: ClusterIP
+  db:
+    host: postgres
+    port: 5432
+    name: passport
+    username: postgres
