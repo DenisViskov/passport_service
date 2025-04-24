@@ -1,0 +1,8 @@
+global:
+  namespace: default
+
+passport-service-app:
+  enabled: true
+
+postgres:
+  enabled: true

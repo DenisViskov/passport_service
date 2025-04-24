@@ -1,0 +1,29 @@
+app:
+  image:
+    repository: denisviskov/passport-service
+    tag: latest
+    pullPolicy: Always
+  replicas: 2
+  resources:
+    limits:
+      cpu: "200m"
+      memory: "512Mi"
+    requests:
+      cpu: "200m"
+      memory: "512Mi"
+  service:
+    port: 80
+    targetPort: 9090
+    type: ClusterIP
+  db:
+    host: postgres
+    port: 5432
+    name: passport
+    username: postgres
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/use-regex: "true"
+    service:
+      name: passport-app
+      port: 80

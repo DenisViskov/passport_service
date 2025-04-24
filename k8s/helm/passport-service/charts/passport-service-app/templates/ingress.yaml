@@ -1,0 +1,26 @@
+{{- if .Values.app.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: passport-app-ingress
+  annotations:
+    {{- toYaml .Values.app.ingress.annotations | nindent 4 }}
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /passports
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.app.ingress.service.name }}
+                port:
+                  number: {{ .Values.app.ingress.service.port }}
+          - path: /actuator
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.app.ingress.service.name }}
+                port:
+                  number: {{ .Values.app.ingress.service.port }}
+  {{- end }}
