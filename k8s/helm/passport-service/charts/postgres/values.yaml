@@ -16,3 +16,6 @@ postgres:
     port: 5432
     targetPort: 5432
     type: ClusterIP
+  storage:
+    size: 1Gi
+    accessModes: ReadWriteOnce
