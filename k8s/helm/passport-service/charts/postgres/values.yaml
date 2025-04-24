@@ -12,3 +12,7 @@ postgres:
       cpu: "250m"
       memory: "512Mi"
   port: 5432
+  service:
+    port: 5432
+    targetPort: 5432
+    type: ClusterIP
