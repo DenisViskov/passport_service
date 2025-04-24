@@ -1,4 +1,7 @@
 postgres:
+  database: passport
+  username: postgres
+  password: "postgres"
   image:
     repository: postgres
     tag: 12

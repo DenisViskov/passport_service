@@ -3,5 +3,6 @@ kind: ConfigMap
 metadata:
   name: postgres-config
 data:
-  POSTGRES_DB: passport
-  POSTGRES_USER: postgres
+  POSTGRES_DB: {{ .Values.postgres.database }}
+  POSTGRES_USER: {{ .Values.postgres.username }}
+  POSTGRES_PASSWORD: {{ .Values.postgres.password | quote }}
